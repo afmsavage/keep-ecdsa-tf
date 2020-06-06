@@ -61,6 +61,14 @@ tf apply \
  -var 'alarm_email=...'
 ```
 
-# Connecting to the server
+## Connecting to the server
 
 Once the `terraform apply` cmd is complete, you should see public_ip and an IP address.  Use the public_ip to ssh into your server using the private ssh key you created earlier
+
+## Approve your email subscription
+
+After the build, you will receive an email confirmation for subscribing to the alerts setup in the Terraform for your node.  You will need to click `Confirm subscription` in the email
+
+## Destroying your server
+
+If you want to delete your node and other resources, run `tf destroy` with the same `-var` arguments you ran in the 

@@ -38,3 +38,9 @@ variable alarm_email {
   type        = string
   default     = ""
 }
+
+variable "key_name" {
+  description = "SSH key name to attach to ec2 instance"
+  type        = string
+  default     = "keep-ecdsa"
+}
