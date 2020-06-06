@@ -1,5 +1,5 @@
 #!/bin/bash
-#TODO: Rename to .tpl
+
 sudo apt update
 sudo apt upgrade -y
 sudo apt install docker.io
@@ -12,9 +12,7 @@ export KEEP_CLIENT_ETHEREUM_PASSWORD=${password}
 EOF
 
 # TODO: Finalize the mainnet cat
-# TODO: Figure out how to do the Ethereum public IP thing, $ETH_WALLET
 # TODO: Test Cloudflare websocket endpoint
-#
 
 cat <<CONFIG >>/home/ubuntu/keep-ecdsa/config/config.toml.test
 
