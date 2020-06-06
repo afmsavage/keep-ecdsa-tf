@@ -1,22 +1,31 @@
 
 provider "aws" {
-  region = var.region
+  region     = var.region
+  access_key = var.accesskey
+  secret_key = var.secretkey
 }
+
+#----------------------------------------------------------------
+# EC2 Instance
+#----------------------------------------------------------------
 
 resource aws_instance "keep-ecdsa" {
   ami             = data.aws_ami.ubuntu.id
   instance_type   = "t3a.small"
-  security_groups = [aws_security_group.keep.id]
+  security_groups = [aws_security_group.keep.name, aws_security_group.ssh.name]
   user_data       = file("user_data.sh")
+  #key_pair          = "keep-ecdsa"
+  monitoring        = true
+  get_password_data = true
 
 
   tags = {
-    Name = "keep-ecdsa-ubt-20.04"
+    Name = "keep-ecdsa-node"
   }
 }
-
+# allow keep port
 resource aws_security_group "keep" {
-  name        = "allow_ecdsa"
+  name        = "allow-ecdsa"
   description = "Allow port 3919"
 
   ingress {
@@ -26,37 +35,39 @@ resource aws_security_group "keep" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+}
+
+resource "aws_security_group" "ssh" {
+  name        = "allow-ssh"
+  description = "allow ssh access"
+
   ingress {
-    from_port = 22
-    to_port   = 22
-    protocol  = "tcp"
+    from_port   = 22
+    to_port     = 22
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
   }
 
   egress {
-    from_port = 0
-    to_port   = 0
-    protocol  = "-1"
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
   }
-
 }
 
+# TODO: Figure out how to upload file to instance
 #----------------------------------------------------------------
 # Upload wallet.json to directory
 #----------------------------------------------------------------
-resource "local_file" "wallet" {
-  sensitive_content = file("${path.module}/wallet/keep_wallet.json") # Marked as sensitive content, no output or diffs
-  filename          = "$HOME/keep-ecdsa/keystore/keep_wallet.json"
-}
-
-#TODO: Figure this out
-#----------------------------------------------------------------
-# Creating SSH Key to use on the instance
-#----------------------------------------------------------------
-# resource "aws_key_pair" "keep-ecdsa" {
-
+# resource "local_file" "wallet" {
+#   sensitive_content = file("${path.module}/wallet/keep_wallet.json") # Marked as sensitive content, no output or diffs
+#   filename          = "$HOME/keep-ecdsa/keystore/keep_wallet.json"
 # }
 
-#----------------------------------------------------------------
-# Cloudwatch Monitoring
-#----------------------------------------------------------------
-# TODO: https://www.terraform.io/docs/providers/aws/r/cloudwatch_metric_alarm.html

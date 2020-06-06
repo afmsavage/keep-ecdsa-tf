@@ -6,16 +6,16 @@
 variable "region" {
   description = "AWS Region to spin up your node - Pass in during apply"
   type        = string
-  default     = "us-east-2"
+  default     = "us-west-2" # cheapest default region
 }
 
-variable "Accesskey" {
+variable "accesskey" {
   description = "AWS Access Key - Pass in during apply"
   type        = string
   default     = ""
 }
 
-variable "Secretkey" {
+variable "secretkey" {
   description = "AWS Secret Key - Pass in during apply"
   type        = string
   default     = ""
@@ -29,6 +29,12 @@ variable "public" {
 
 variable "passwd" {
   description = "Password to unlock wallet file - Pass in during apply"
+  type        = string
+  default     = ""
+}
+
+variable alarm_email {
+  description = "Email which will receive monitoring alerts"
   type        = string
   default     = ""
 }

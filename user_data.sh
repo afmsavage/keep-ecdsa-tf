@@ -7,7 +7,7 @@ mkdir -p $HOME/keep-ecdsa/{config,keystore,persistence}
 cat <<EOF >>$home/.bashrc
 
 export ETHNODE=https://cloudflare-eth.com/
-export ETH_WALLET=${wallet}
+export ETH_WALLET=${public}
 export KEEP_CLIENT_ETHEREUM_PASSWORD=${password}
 EOF
 
@@ -20,7 +20,7 @@ cat <<CONFIG >>$HOME/keep-ecdsa/config/config.toml.test
 
 # Connection details of ethereum blockchain.
 [ethereum]
-  URL = "wss://cloudflare-eth.com/"
+  URL = "https://cloudflare-eth.com/"
   URLRPC = "https://cloudflare-eth.com/"
 
 

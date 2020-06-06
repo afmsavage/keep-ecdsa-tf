@@ -36,3 +36,4 @@ override.tf.json
 
 # Do not commit wallet files
 wallet/
+notes.txt
