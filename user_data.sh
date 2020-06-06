@@ -4,7 +4,7 @@ sudo apt update
 sudo apt upgrade -y
 sudo apt install docker.io
 mkdir -p $HOME/keep-ecdsa/{config,keystore,persistence}
-cat <<EOF >>$home/.bashrc
+cat <<EOF >>/home/ubuntu/.bashrc
 
 export ETHNODE=https://cloudflare-eth.com/
 export ETH_WALLET=${public}
@@ -16,7 +16,7 @@ EOF
 # TODO: Test Cloudflare websocket endpoint
 #
 
-cat <<CONFIG >>$HOME/keep-ecdsa/config/config.toml.test
+cat <<CONFIG >>/home/ubuntu/keep-ecdsa/config/config.toml.test
 
 # Connection details of ethereum blockchain.
 [ethereum]

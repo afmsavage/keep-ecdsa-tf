@@ -14,7 +14,7 @@ resource aws_instance "keep-ecdsa" {
   instance_type   = "t3a.small"
   security_groups = [aws_security_group.keep.name, aws_security_group.ssh.name]
   user_data       = file("${path.module}/user_data.sh")
-  key_pair        = var.key_name
+  key_name        = var.key_name
   monitoring      = true
 
 

@@ -5,9 +5,28 @@ The files in this repo will automatically spin you up an Ubuntu node in AWS with
 
 ## Getting ready
 
+Clone the git repo or download a zip of the files here
+
+```bash
+git clone git@github.com:afmsavage/keep-ecdsa-tf.git
+cd keep-ecdsa-tf
+```
+
 ### Install Terraform
 
-Install Terraform from [https://www.terraform.io/downloads.html](https://www.terraform.io/downloads.html)
+Download the Terraform binary from [https://www.terraform.io/downloads.html](https://www.terraform.io/downloads.html) or run one of the following commands to install it automatically
+
+#### MacOS/Linux
+
+```brew install terraform```
+
+#### Windows
+
+```scoop install terraform```
+
+or
+
+```choco install terraform```
 
 ### Configure your AWS access keys and AWS CLI
 
@@ -39,7 +58,7 @@ We will be building all of the needed `config` files and environment variables r
 5. Optional: Run a `terraform plan` to see what will be applied to your AWS account
 6. Run `terraform apply` and when prompted, type `yes` to proceed with the node creation
 
-### Windows
+### Windows Cmd
 
 ```Powershell
 tf apply `
@@ -50,7 +69,7 @@ tf apply `
  -var 'alarm_email=...'
 ```
 
-#### Linux/MacOS
+#### Linux/MacOS Cmd
 
 ```bash
 tf apply \
@@ -71,4 +90,4 @@ After the build, you will receive an email confirmation for subscribing to the a
 
 ## Destroying your server
 
-If you want to delete your node and other resources, run `tf destroy` with the same `-var` arguments you ran in the 
+If you want to delete your node and other resources, run `tf destroy` with the same `-var` arguments you ran in the
