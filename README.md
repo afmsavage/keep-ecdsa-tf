@@ -42,7 +42,6 @@ Download and install the AWS CLI.  This will be required if you want to utilize 
 **IF YOU DON'T WANT TO INSTALL THE AWS CLI FOR MONITORING**
 Have your AWS Access key and Secret keys ready to pass in as variables during the run cmd or have your AWS credential store setup in `~/.aws/credentials` and `~/.aws/config`.  See [this AWS document for assistance](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-configure.html) configuring them locally
 
-TODO: Maybe not needed
 ### Create your staking wallet
 
 Your Ethereum public address and password protected `keep_wallet.json` file.  The password to unlock the wallet will be automatically added to environment variables and ready to unlock it inside of the keep-ecdsa Docker container
@@ -110,8 +109,8 @@ After the build, you will receive an email confirmation for subscribing to the a
 
 ## Uploading your keep-wallet.json
 
-Your private key/wallet file will need to be uploaded to the instance into the /home/ubuntu/keep-ecdsa/keystore directory.  This is not part of this build due to this being mainnet and real funds.  I tried to keep this process as trustless as possible
+Your private key/wallet file will need to be uploaded to the instance into the /home/ubuntu/keep-ecdsa/keystore directory.  You can use SCP for this.  This is not part of this build due to this being mainnet and real funds.  I tried to keep this process as trustless as possible
 
 ## Destroying your server
 
-If you want to delete your node and other resources, run `tf destroy` with the same `-var` arguments you ran in the
+If you want to delete your node and other resources, run `tf destroy` with the same `-var` arguments you ran in the apply command
