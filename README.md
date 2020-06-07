@@ -37,7 +37,7 @@ Have your AWS Access key and Secret keys ready to pass in as variables during th
 
 ### Create your staking wallet
 
-Your Ethereum public address and password protected `keep_wallet.json` file
+Your Ethereum public address and password protected `keep_wallet.json` file.  The password to unlock the wallet will be automatically added to environment variables and ready to unlock it inside of the keep-ecdsa Docker container
 
 ### Generate ssh key
 
@@ -82,11 +82,15 @@ tf apply \
 
 ## Connecting to the server
 
-Once the `terraform apply` cmd is complete, you should see public_ip and an IP address.  Use the public_ip to ssh into your server using the private ssh key you created earlier
+Once the `terraform apply` cmd is complete, you should see `public_ip` and an IP address.  Use the `public_ip` to ssh into your server using the private ssh key you created earlier
 
 ## Approve your email subscription
 
 After the build, you will receive an email confirmation for subscribing to the alerts setup in the Terraform for your node.  You will need to click `Confirm subscription` in the email
+
+## Uploading your keep-wallet.json
+
+Your private key/wallet file will need to be uploaded to the instance into the /home/ubuntu/keep-ecdsa/keystore directory.  This is not part of this build due to this being mainnet and real funds
 
 ## Destroying your server
 

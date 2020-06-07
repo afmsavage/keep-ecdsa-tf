@@ -61,12 +61,4 @@ resource "aws_security_group" "ssh" {
   }
 }
 
-# TODO: Figure out how to upload file to instance
-#----------------------------------------------------------------
-# Upload wallet.json to directory
-#----------------------------------------------------------------
-# resource "local_file" "wallet" {
-#   sensitive_content = file("${path.module}/wallet/keep_wallet.json") # Marked as sensitive content, no output or diffs
-#   filename          = "$HOME/keep-ecdsa/keystore/keep_wallet.json"
-# }
 
