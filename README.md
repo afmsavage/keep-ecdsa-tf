@@ -3,6 +3,13 @@
 
 The files in this repo will automatically spin you up an Ubuntu node in AWS with the folder structure and required packages
 
+__**Features**__
+
+- Monitoring
+- **Email Alerts** for instance down and high resource usage
+- Automatically create the `keep-ecdsa` node config and folder structure
+- Install the necessary programs such as Docker
+  
 ## Getting ready
 
 Clone the git repo or download a zip of the files here
@@ -35,6 +42,7 @@ Download and install the AWS CLI.  This will be required if you want to utilize 
 **IF YOU DON'T WANT TO INSTALL THE AWS CLI FOR MONITORING**
 Have your AWS Access key and Secret keys ready to pass in as variables during the run cmd or have your AWS credential store setup in `~/.aws/credentials` and `~/.aws/config`.  See [this AWS document for assistance](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-configure.html) configuring them locally
 
+TODO: Maybe not needed
 ### Create your staking wallet
 
 Your Ethereum public address and password protected `keep_wallet.json` file.  The password to unlock the wallet will be automatically added to environment variables and ready to unlock it inside of the keep-ecdsa Docker container
@@ -51,12 +59,24 @@ Go into the AWS Console and generate a keypair that you will use for this machin
 
 We will be building all of the needed `config` files and environment variables required to get your node up and running.  You will still be required to log in to the server and start the keep-ecdsa Docker container yourself
 
-1. Download a `.zip` of this repository or `git clone` it to your local machine
-2. Open a CLI into this directory
-3. Place your private wallet file into the wallet directory and rename it to `keep_wallet.json`.  This file is marked as sensitive in the Terraform so it will not be output anywhere
-4. Run `terraform init` to download the required providers
-5. Optional: Run a `terraform plan` to see what will be applied to your AWS account
-6. Run `terraform apply` and when prompted, type `yes` to proceed with the node creation
+1. Open a CLI into the keep-ecdsa-tf directory
+2. Run `terraform init` to download the required Terraform providers
+3. Optional: Run a `terraform plan` to see what will be applied to your AWS account
+4. Run `terraform apply` and when prompted, type `yes` to proceed with the node creation
+
+### Variables
+
+These are the variables which are accepted at creation
+
+| var name    | Description                                | value type | required? |
+|-------------|--------------------------------------------|------------|-----------|
+| public      | public IP address of your wallet           | string     | yes       |
+| passwd      | password to unlock your wallet.json file   | string     | yes       |
+| accesskey   | AWS access key                             | string     | yes       |
+| secretkey   | AWS secret key                             | string     | yes       |
+| alarm_email | Email which will receive monitoring alerts | string     | yes       |
+| key_name    | ssh key name if not using `keep-ecdsa`     | string     | no        |
+| region      | region to create the server in             | string     | no        |
 
 ### Windows Cmd
 
@@ -90,7 +110,7 @@ After the build, you will receive an email confirmation for subscribing to the a
 
 ## Uploading your keep-wallet.json
 
-Your private key/wallet file will need to be uploaded to the instance into the /home/ubuntu/keep-ecdsa/keystore directory.  This is not part of this build due to this being mainnet and real funds
+Your private key/wallet file will need to be uploaded to the instance into the /home/ubuntu/keep-ecdsa/keystore directory.  This is not part of this build due to this being mainnet and real funds.  I tried to keep this process as trustless as possible
 
 ## Destroying your server
 

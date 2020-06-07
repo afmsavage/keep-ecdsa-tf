@@ -1,20 +1,25 @@
 #!/bin/bash
 
 sudo apt update
-sudo apt upgrade -y
-sudo apt install docker.io
-mkdir -p $HOME/keep-ecdsa/{config,keystore,persistence}
+sudo apt install docker.io nodejs -y
+mkdir -p /home/ubuntu/keep-ecdsa/{config,keystore,persistence}
+
 cat <<EOF >>/home/ubuntu/.bashrc
 
 export ETHNODE=https://cloudflare-eth.com/
 export ETH_WALLET=${public}
 export KEEP_CLIENT_ETHEREUM_PASSWORD=${password}
+export SERVER_IP=$(curl ifconfig.me)
 EOF
 
+export ETHNODE=https://cloudflare-eth.com/
+export ETH_WALLET=${public}
+export KEEP_CLIENT_ETHEREUM_PASSWORD=${password}
+export SERVER_IP=$(curl ifconfig.me)
 # TODO: Finalize the mainnet cat
 # TODO: Test Cloudflare websocket endpoint
 
-cat <<CONFIG >>/home/ubuntu/keep-ecdsa/config/config.toml.test
+cat <<CONFIG >>/home/ubuntu/keep-ecdsa/config/config.toml
 
 # Connection details of ethereum blockchain.
 [ethereum]
@@ -58,7 +63,7 @@ cat <<CONFIG >>/home/ubuntu/keep-ecdsa/config/config.toml.test
 Port = 3919
 
 # Override the node’s default addresses announced in the network
-AnnouncedAddresses = ["/ip4/${public_ip}/tcp/5678"]
+AnnouncedAddresses = ["/ip4/$SERVER_IP/tcp/5678"]
 
 [TSS]
 # Timeout for TSS protocol pre-parameters generation. The value
