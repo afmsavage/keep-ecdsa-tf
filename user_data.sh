@@ -72,3 +72,7 @@ AnnouncedAddresses = ["/ip4/$SERVER_IP/tcp/5678"]
 # pre-parameters generation will be set to .
   PreParamsGenerationTimeout = "2m30s"
 CONFIG
+
+git clone https://github.com/knarz/keep-setup.git
+npm --prefix /home/ubuntu/keep-setup install /keep-setup
+node /keep-setup/keystore.js ${password}
