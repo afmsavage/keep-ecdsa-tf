@@ -114,3 +114,28 @@ Your private key/wallet file will need to be uploaded to the instance into the /
 ## Destroying your server
 
 If you want to delete your node and other resources, run `tf destroy` with the same `-var` arguments you ran in the apply command
+
+## Start the keep-ecdsa container
+
+When logged into the server, run the following command from the home directory of the Ubuntu user.  This will start the keep-ecdsa container
+
+```bash
+sudo docker run -dit \
+--restart always \
+--entrypoint /usr/local/bin/keep-ecdsa \
+--volume $HOME/keep-ecdsa:/mnt/keep-ecdsa \
+--env KEEP_ETHEREUM_PASSWORD=$KEEP_CLIENT_ETHEREUM_PASSWORD \
+--name ec \
+--env LOG_LEVEL=debug \
+-p 3920:3919 \
+keepnetwork/keep-ecdsa-client:latest --config /mnt/keep-ecdsa/config/config.toml start
+```
+
+## Optional Changes
+
+You can add the ubuntu user to the Docker group and allow Docker commands without sudo by running these two commands, logging out then log back in.
+
+```bash
+sudo groupadd docker
+sudo usermod -aG docker $USER
+```
