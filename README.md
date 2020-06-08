@@ -1,5 +1,5 @@
 
-# KEEP-ECDSA Node Terraform for AWS
+# KEEP-ECDSA Node Terraform for AWS (TESTNET VERSION)
 
 The files in this repo will automatically spin you up an Ubuntu node in AWS with the folder structure and required packages
 
@@ -109,7 +109,7 @@ After the build, you will receive an email confirmation for subscribing to the a
 
 ## Uploading your keep-wallet.json
 
-Your private key/wallet file will need to be uploaded to the instance into the /home/ubuntu/keep-ecdsa/keystore directory.  You can use SCP for this.  This is not part of this build due to this being mainnet and real funds.  I tried to keep this process as trustless as possible
+Your private key/wallet file will need to be uploaded to the instance into the /home/ubuntu/keep-ecdsa/keystore directory.  You can use SCP for this.  I tried to keep this process as trustless as possible
 
 ## Destroying your server
 
