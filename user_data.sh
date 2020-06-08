@@ -3,6 +3,7 @@
 sudo apt update
 sudo apt install docker.io nodejs -y
 mkdir -p /home/ubuntu/keep-ecdsa/{config,keystore,persistence}
+sudo chown -R ubuntu /home/ubuntu/keep-ecdsa/
 
 cat <<EOF >>/home/ubuntu/.bashrc
 
