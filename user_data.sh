@@ -36,7 +36,7 @@ cat <<CONFIG >>/home/ubuntu/keep-ecdsa/config/config.toml
 # if it does, the new contract address will be listed here:
 # https://github.com/keep-network/keep-ecdsa/blob/master/docs/run-keep-ecdsa.adoc
 [ethereum.ContractAddresses]
-  BondedECDSAKeepFactory = "0x18758f16988E61Cd4B61E6B930694BD9fB07C22F"
+  BondedECDSAKeepFactory = "0x17caddf97a1d1123efb7b233cb16c76c31a96e02"
 
 
 # This addresses might change and need to be replaced from time to time
@@ -45,7 +45,7 @@ cat <<CONFIG >>/home/ubuntu/keep-ecdsa/config/config.toml
 # Addresses of applications approved by the operator.
 [SanctionedApplications]
   Addresses = [
-    "0x41A1b40c1280883eA14C6a71e23bb66b83B3fB59",
+    "0x2b70907b5c44897030ea1369591ddcd23c5d85d6",
 ]
 
 [Storage]
