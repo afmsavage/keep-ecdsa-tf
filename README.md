@@ -1,7 +1,7 @@
 
 # KEEP-ECDSA Node Terraform for AWS
 
-The files in this repo will automatically spin you up an Ubuntu node in AWS with the folder structure and required packages
+The files in this repo will automatically spin you up an Ubuntu node in AWS with the folder structure and required packages.  You can refer to [https://gist.github.com/afmsavage/8fc19937a6b263f05c3e215d8860629c](https://gist.github.com/afmsavage/8fc19937a6b263f05c3e215d8860629c) for more information about the configuration that is performed automatically by this module.  That gist is a walkthrough on how to manually setup an ECDSA node on either the testnet or the mainnet
 
 __**Features**__
 
