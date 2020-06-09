@@ -19,6 +19,10 @@ git clone git@github.com:afmsavage/keep-ecdsa-tf.git
 cd keep-ecdsa-tf
 ```
 
+## Get an infura account
+
+You will need an Infura account to run this on testnet.  Remember to pass your Infura project ID into the project at runtime so it can map the info to the correct part of the configuration
+
 ### Install Terraform
 
 Download the Terraform binary from [https://www.terraform.io/downloads.html](https://www.terraform.io/downloads.html) or run one of the following commands to install it automatically
@@ -74,6 +78,7 @@ These are the variables which are accepted at creation
 | accesskey   | AWS access key                             | string     | yes       |
 | secretkey   | AWS secret key                             | string     | yes       |
 | alarm_email | Email which will receive monitoring alerts | string     | yes       |
+| infura      | Infura project ID                          | string     | yes       |
 | key_name    | ssh key name if not using `keep-ecdsa`     | string     | no        |
 | region      | region to create the server in             | string     | no        |
 
@@ -85,7 +90,8 @@ tf apply `
  -var 'passwd=...' `
  -var 'accesskey=...' `
  -var 'secretkey=...' `
- -var 'alarm_email=...'
+ -var 'alarm_email=...' `
+ -var 'infura=...'
 ```
 
 #### Linux/MacOS Cmd
@@ -96,7 +102,8 @@ tf apply \
  -var 'passwd=...' \
  -var 'accesskey=...' \
  -var 'secretkey=...' \
- -var 'alarm_email=...'
+ -var 'alarm_email=...' \
+ -var 'infura=...'
 ```
 
 ## Connecting to the server

@@ -44,3 +44,9 @@ variable "key_name" {
   type        = string
   default     = "keep-ecdsa"
 }
+
+variable "infura" {
+  description = "Infura project ID"
+  type        = string
+  default     = ""
+}

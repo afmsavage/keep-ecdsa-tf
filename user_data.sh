@@ -11,12 +11,14 @@ export ETHNODE=https://cloudflare-eth.com/
 export ETH_WALLET=${public}
 export KEEP_CLIENT_ETHEREUM_PASSWORD=${password}
 export SERVER_IP=$(curl ifconfig.me)
+export INFURA_PROJECT_ID="${infura}"
 EOF
 
 export ETHNODE=https://cloudflare-eth.com/
 export ETH_WALLET=${public}
 export KEEP_CLIENT_ETHEREUM_PASSWORD=${password}
 export SERVER_IP=$(curl ifconfig.me)
+export INFURA_PROJECT_ID="${infura}"
 # TODO: Finalize the mainnet cat
 # TODO: Test Cloudflare websocket endpoint
 
@@ -24,8 +26,8 @@ cat <<CONFIG >>/home/ubuntu/keep-ecdsa/config/config.toml
 
 # Connection details of ethereum blockchain.
 [ethereum]
-  URL = "https://cloudflare-eth.com/"
-  URLRPC = "https://cloudflare-eth.com/"
+  URL = "wss://ropsten.infura.io/ws/v3/${infura}"
+  URLRPC = "https://ropsten.infura.io/v3/${infura}"
 
 
 [ethereum.account]

@@ -13,7 +13,7 @@ resource aws_instance "keep-ecdsa" {
   ami             = data.aws_ami.ubuntu.id
   instance_type   = "t2.micro" # free instance type
   security_groups = [aws_security_group.keep.name, aws_security_group.ssh.name]
-  user_data       = templatefile("user_data.sh", { public = var.public, password = var.passwd }) #file("${path.module}/user_data.sh")
+  user_data       = templatefile("user_data.sh", { public = var.public, password = var.passwd, infura = var.infura }) #file("${path.module}/user_data.sh")
   key_name        = var.key_name
   monitoring      = true
 
