@@ -42,7 +42,6 @@ Download and install the AWS CLI.  This will be required if you want to utilize 
 **IF YOU DON'T WANT TO INSTALL THE AWS CLI FOR MONITORING**
 Have your AWS Access key and Secret keys ready to pass in as variables during the run cmd or have your AWS credential store setup in `~/.aws/credentials` and `~/.aws/config`.  See [this AWS document for assistance](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-configure.html) configuring them locally
 
-TODO: Maybe not needed
 ### Create your staking wallet
 
 Your Ethereum public address and password protected `keep_wallet.json` file.  The password to unlock the wallet will be automatically added to environment variables and ready to unlock it inside of the keep-ecdsa Docker container
@@ -128,6 +127,8 @@ sudo docker run -dit \
 --env KEEP_ETHEREUM_PASSWORD=$KEEP_CLIENT_ETHEREUM_PASSWORD \
 --name ec \
 --env LOG_LEVEL=debug \
+--log-opt max-size=100m \
+--log-opt max-file=3 \
 -p 3920:3919 \
 keepnetwork/keep-ecdsa-client:latest --config /mnt/keep-ecdsa/config/config.toml start
 ```
