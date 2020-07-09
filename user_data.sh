@@ -48,7 +48,7 @@ cat <<CONFIG >>/home/ubuntu/keep-ecdsa/config/config.toml
 # Addresses of applications approved by the operator.
 [SanctionedApplications]
   Addresses = [
-    "0x2b70907b5c44897030ea1369591ddcd23c5d85d6",
+    "0x14dC06F762E7f4a756825c1A1dA569b3180153cB",
 ]
 
 [Storage]
