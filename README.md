@@ -135,7 +135,7 @@ sudo docker run -dit \
 --name ec \
 --env LOG_LEVEL=debug \
 -p 3920:3919 \
-keepnetwork/keep-ecdsa-client:latest --config /mnt/keep-ecdsa/config/config.toml start
+keepnetwork/keep-ecdsa-client:1.2.0-rc --config /mnt/keep-ecdsa/config/config.toml start
 ```
 
 ## Optional Changes
