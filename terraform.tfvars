@@ -1,0 +1,8 @@
+public=''
+passwd=''
+accesskey=''
+secretkey=''
+alarm_email=''
+infura=''
+grafanaurl=''
+grafanaauth=''

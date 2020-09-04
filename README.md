@@ -69,10 +69,10 @@ We will be building all of the needed `config` files and environment variables r
 
 ### Variables
 
-These are the variables which are accepted at creation
+These are the variables which are accepted at creation.  The can either be passed in at runtime or you can fill in the appropriate values in the tfvars file and pass the file in at runtime with `terraform apply -var-file="testing.tfvars"`
 
 | var name    | Description                                | value type | required? |
-|-------------|--------------------------------------------|------------|-----------|
+| ----------- | ------------------------------------------ | ---------- | --------- |
 | public      | public IP address of your wallet           | string     | yes       |
 | passwd      | password to unlock your wallet.json file   | string     | yes       |
 | accesskey   | AWS access key                             | string     | yes       |

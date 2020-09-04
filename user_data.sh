@@ -20,7 +20,6 @@ export KEEP_CLIENT_ETHEREUM_PASSWORD=${password}
 export SERVER_IP=$(curl ifconfig.me)
 export INFURA_PROJECT_ID="${infura}"
 # TODO: Finalize the mainnet cat
-# TODO: Test Cloudflare websocket endpoint
 
 cat <<CONFIG >>/home/ubuntu/keep-ecdsa/config/config.toml
 
@@ -76,3 +75,75 @@ CONFIG
 git clone https://github.com/knarz/keep-setup.git
 npm --prefix /home/ubuntu/keep-setup install /keep-setup
 node /keep-setup/keystore.js ${password}
+
+# install docker compose
+sudo curl -L "https://github.com/docker/compose/releases/download/1.26.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+sudo chmod +x /usr/local/bin/docker-compose
+
+mkdir /home/ubuntu/prometheus/
+mkdir /home/ubuntu/prometheus/prometheus-data
+curl -f https://raw.githubusercontent.com/mutedtommy/prom-loki-configs/master/prometheus/docker-compose.yml -o /home/ubuntu/prometheus/docker-compose.yml
+cat <<EOF >>/home/ubuntu/prometheus/prometheus.yml
+# my global config
+global:
+  scrape_interval: 120s # By default, scrape targets every 15 seconds.
+  evaluation_interval: 120s # By default, scrape targets every 15 seconds.
+  # scrape_timeout is set to the global default (10s).
+  # Attach these labels to any time series or alerts when communicating with
+  # external systems (federation, remote storage, Alertmanager).
+  external_labels:
+    monitor: "my-project"
+# Load and evaluate rules in this file every 'evaluation_interval' seconds.
+rule_files:
+  # - "alert.rules"
+  # - "first.rules"
+  # - "second.rules"
+# A scrape configuration containing exactly one endpoint to scrape:
+# Here it's Prometheus itself.
+scrape_configs:
+  - job_name: "prometheus"
+    scrape_interval: 120s
+    # scheme defaults to 'http'.
+    static_configs:
+      - targets: ["localhost:9090", "cadvisor:8080", "node-exporter:9100"]
+  - job_name: "keep-metrics"
+    # Override the global default and scrape targets from this job every 5 seconds.
+    scrape_interval: 60s
+    # metrics_path defaults to '/metrics'
+    # scheme defaults to 'http'.
+    static_configs:
+      - targets: ["$SERVER_IP:8081"]
+# Alert manager config
+#alerting:
+#  alertmanagers:
+#    - static_configs:
+#      - targets: ["localhost:9093"]
+EOF
+sudo docker-compose -f /home/ubuntu/prometheus/docker-compose.yml up -d
+mkdir /home/ubuntu/loki
+curl -f https://raw.githubusercontent.com/mutedtommy/prom-loki-configs/master/loki/docker-compose.yml -o /home/ubuntu/loki/docker-compose.yml
+curl -f https://raw.githubusercontent.com/mutedtommy/prom-loki-configs/master/loki/local-config.yaml -o /home/ubuntu/loki/local-config.yaml
+sudo docker plugin install grafana/loki-docker-driver:latest --alias loki --grant-all-permissions
+sudo cat <<EOF >>/etc/docker/daemon.json
+{
+    "debug" : true,
+    "log-driver": "loki",
+    "log-opts": {
+        "loki-url": "http://$SERVER_IP:3100/loki/api/v1/push"
+    }
+}
+EOF
+
+sudo docker-compose -f /home/ubuntu/loki/docker-compose.yml up -d
+
+sudo docker run -dit \
+--restart always \
+--log-driver loki \
+--log-opt loki-url="http://<IP|hostname of the server running Loki>:3100/loki/api/v1/push" \
+--volume $HOME/keep-client:/mnt \
+--env KEEP_ETHEREUM_PASSWORD=$KEEP_CLIENT_ETHEREUM_PASSWORD \
+--env LOG_LEVEL=debug \
+--name keep-client \
+-p 3919:3919 \
+-p 8081:8080 \
+keepnetwork/keep-client:v1.2.0 --config /mnt/config/config.toml start
