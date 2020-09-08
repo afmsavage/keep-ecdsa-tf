@@ -40,6 +40,7 @@ resource "aws_security_group" "ssh" {
   }
 }
 
+# Whitelist of Grafana Cloud ports
 resource "aws_security_group" "loki" {
   name        = "allow-loki"
   description = "grafana whitelist"
@@ -120,6 +121,7 @@ resource "aws_security_group" "loki" {
 
 }
 
+# Whitelist of Grafana Cloud ports
 resource "aws_security_group" "grafana" {
   name        = "allow-grafana"
   description = "grafana whitelist"
