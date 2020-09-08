@@ -135,15 +135,40 @@ sudo cat <<EOF >>/etc/docker/daemon.json
 EOF
 
 sudo docker-compose -f /home/ubuntu/loki/docker-compose.yml up -d
+cat <<EOF >>docker-compose.yml
 
-sudo docker run -dit \
---restart always \
---log-driver loki \
---log-opt loki-url="http://<IP|hostname of the server running Loki>:3100/loki/api/v1/push" \
---volume $HOME/keep-client:/mnt \
---env KEEP_ETHEREUM_PASSWORD=$KEEP_CLIENT_ETHEREUM_PASSWORD \
---env LOG_LEVEL=debug \
---name keep-client \
--p 3919:3919 \
--p 8081:8080 \
-keepnetwork/keep-client:v1.2.0 --config /mnt/config/config.toml start
+prometheus:
+  image: prom/prometheus:latest
+  container_name: monitoring_prometheus
+  restart: unless-stopped
+  volumes:
+    - ~/prometheus:/etc/prometheus/
+    - ~/prometheus/prometheus-data:/prometheus
+  command:
+    - "--config.file=/etc/prometheus/prometheus.yml"
+    - "--storage.tsdb.path=/prometheus"
+  expose:
+    - 9090
+  ports:
+    - 9090:9090
+  links:
+    - cadvisor:cadvisor
+    - node-exporter:node-exporter
+node-exporter:
+  image: prom/node-exporter:latest
+  container_name: monitoring_node_exporter
+  restart: unless-stopped
+  expose:
+    - 9100
+cadvisor:
+  image: google/cadvisor:latest
+  container_name: monitoring_cadvisor
+  restart: unless-stopped
+  volumes:
+    - /:/rootfs:ro
+    - /var/run:/var/run:rw
+    - /sys:/sys:ro
+    - /var/lib/docker/:/var/lib/docker:ro
+  expose:
+    - 8080
+EOF
