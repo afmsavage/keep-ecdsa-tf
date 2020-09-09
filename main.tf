@@ -20,6 +20,9 @@ resource aws_instance "keep-ecdsa" {
   user_data       = templatefile("user_data.sh", { public = var.public, password = var.passwd })
   key_name        = var.key_name
   monitoring      = true
+  root_block_device {
+    volume_size = 40 # setting root block device to 40GB to handle larger log size on main net
+  }
 
   tags = {
     Name = "keep-ecdsa-node"
